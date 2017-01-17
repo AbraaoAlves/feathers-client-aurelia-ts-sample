@@ -1,0 +1,13 @@
+<template id="app">
+  <require from="./resources/elements/nav-bar.html"></require>
+  <require from="bootstrap/css/bootstrap.css"></require>
+  <require from="./app.css"></require>
+  
+  <nav-bar router.bind="router" auth.bind="auth"></nav-bar>
+  
+  <loading-indicator loading.bind="router.isNavigating || api.isRequesting"></loading-indicator>
+  
+  <section class="page-host">
+    <router-view></router-view>
+  </section>
+</template>

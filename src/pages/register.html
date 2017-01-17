@@ -1,0 +1,27 @@
+<template>
+  
+  <div class="container">
+    <form class="form-signin" submit.delegate="singup()">
+      <h2 class="form-signin-heading">Cadastro</h2>
+
+      <label for="inputEmail" class="sr-only">Email </label>
+      <input id="inputEmail" type="email" class="form-control" placeholder="seu@email.com" 
+        required="" autofocus="" value.bind="user.email">
+
+      <label for="inputPassword" class="sr-only">Senha</label>
+      <input id="inputPassword" type="password" class="form-control" placeholder="Senha" 
+        required="" value.bind="user.password">
+      
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="remember-me" required> 
+          Aceito os <a href="">termos</a> de adesão. 
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" 
+        type="submit"> Registrar
+      </button>
+    </form>
+  </div>
+
+</template>
