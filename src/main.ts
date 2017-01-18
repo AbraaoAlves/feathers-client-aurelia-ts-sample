@@ -13,8 +13,7 @@ import environment from './environment';
 export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
-    .feature('resources')
-    .feature('dash');
+    .feature('resources');
 
   if (environment.debug) {
     aurelia.use.developmentLogging();

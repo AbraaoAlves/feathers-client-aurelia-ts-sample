@@ -13,7 +13,7 @@ export class Register {
     let user = await this.auth.register(this.user);
     await this.auth.login(this.user);
     
-    this.router.navigateToRoute('dash');  
+    this.router.navigateToRoute('home');  
   }
 }
     

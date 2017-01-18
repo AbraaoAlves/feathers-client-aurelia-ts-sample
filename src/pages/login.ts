@@ -10,6 +10,6 @@ export class Login {
   
   async singin(){
     await this.auth.login(this.user);
-    this.router.navigateToRoute('dash');  
+    this.router.navigateToRoute('home');  
   }
 }

@@ -193,19 +193,6 @@ define('routes/home-route',["require", "exports"], function (require, exports) {
     };
 });
 
-define('routes/dash-route',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = {
-        route: 'dash',
-        name: 'dash',
-        moduleId: 'dash/dash-app',
-        nav: true,
-        title: 'Dashboard',
-        auth: true
-    };
-});
-
 define('routes/login-route',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -239,7 +226,7 @@ define('routes/register-route',["require", "exports"], function (require, export
         moduleId: 'pages/register',
         nav: true,
         title: 'Register',
-        auth: false
+        auth: true
     };
 });
 
@@ -252,15 +239,15 @@ define('routes/profile-route',["require", "exports"], function (require, exports
         moduleId: 'pages/profile',
         nav: true,
         title: 'Profile',
-        auth: false
+        auth: true
     };
 });
 
-define('routes/index',["require", "exports", "./home-route", "./dash-route", "./login-route", "./logout-route", "./register-route", "./profile-route"], function (require, exports, home_route_1, dash_route_1, login_route_1, logout_route_1, register_route_1, profile_route_1) {
+define('routes/index',["require", "exports", "./home-route", "./login-route", "./logout-route", "./register-route", "./profile-route"], function (require, exports, home_route_1, login_route_1, logout_route_1, register_route_1, profile_route_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = [
-        home_route_1.default, dash_route_1.default, register_route_1.default, login_route_1.default, logout_route_1.default, profile_route_1.default
+        home_route_1.default, register_route_1.default, login_route_1.default, logout_route_1.default, profile_route_1.default
     ];
 });
 
@@ -325,8 +312,7 @@ define('main',["require", "exports", "./environment", "bootstrap"], function (re
     function configure(aurelia) {
         aurelia.use
             .standardConfiguration()
-            .feature('resources')
-            .feature('dash');
+            .feature('resources');
         if (environment_1.default.debug) {
             aurelia.use.developmentLogging();
         }
@@ -336,296 +322,6 @@ define('main',["require", "exports", "./environment", "bootstrap"], function (re
         aurelia.start().then(function () { return aurelia.setRoot(); });
     }
     exports.configure = configure;
-});
-
-define('vendor',["require", "exports"], function (require, exports) {
-    "use strict";
-});
-
-define('web-api',["require", "exports"], function (require, exports) {
-    "use strict";
-    var latency = 200;
-    var id = 0;
-    var getId = function () { return ++id; };
-    var contacts = [
-        {
-            id: getId(),
-            name: 'John Tolkien',
-            cpf: '02139085300',
-            email: 'tolkien@inklings.com',
-            phoneNumber: '867-5309',
-            senha: '123456'
-        },
-        {
-            id: getId(),
-            name: 'Clive Lewis',
-            cpf: '02139085301',
-            email: 'lewis@inklings.com',
-            phoneNumber: '867-5309',
-            senha: '123456'
-        },
-        {
-            id: getId(),
-            name: 'Owen Barfield',
-            cpf: '02139085302',
-            email: 'barfield@inklings.com',
-            phoneNumber: '867-5309',
-            senha: '123456'
-        },
-        {
-            id: getId(),
-            name: 'Charles Williams',
-            cpf: '02139085303',
-            email: 'williams@inklings.com',
-            phoneNumber: '867-5309',
-            senha: '123456'
-        },
-        {
-            id: getId(),
-            name: 'Roger Green',
-            cpf: '02139085304',
-            email: 'green@inklings.com',
-            phoneNumber: '867-5309',
-            senha: '123456'
-        }
-    ];
-    var WebAPI = (function () {
-        function WebAPI() {
-            this.isRequesting = false;
-        }
-        WebAPI.prototype.getContactList = function () {
-            var _this = this;
-            this.isRequesting = true;
-            return new Promise(function (resolve) {
-                setTimeout(function () {
-                    var results = contacts.map(function (x) {
-                        return ({ id: x.id, name: x.name, cpf: x.cpf, email: x.email });
-                    });
-                    resolve(results);
-                    _this.isRequesting = false;
-                }, latency);
-            });
-        };
-        WebAPI.prototype.getContactDetails = function (id) {
-            var _this = this;
-            this.isRequesting = true;
-            return new Promise(function (resolve) {
-                setTimeout(function () {
-                    var found = contacts.filter(function (x) { return x.id == id; })[0];
-                    resolve(JSON.parse(JSON.stringify(found)));
-                    _this.isRequesting = false;
-                }, latency);
-            });
-        };
-        WebAPI.prototype.saveContact = function (contact) {
-            var _this = this;
-            this.isRequesting = true;
-            return new Promise(function (resolve) {
-                setTimeout(function () {
-                    var instance = JSON.parse(JSON.stringify(contact));
-                    var found = contacts.filter(function (x) { return x.id == contact.id; })[0];
-                    if (found) {
-                        var index = contacts.indexOf(found);
-                        contacts[index] = instance;
-                    }
-                    else {
-                        instance.id = getId();
-                        contacts.push(instance);
-                    }
-                    _this.isRequesting = false;
-                    resolve(instance);
-                }, latency);
-            });
-        };
-        return WebAPI;
-    }());
-    exports.WebAPI = WebAPI;
-});
-
-define('dash/dash-app',["require", "exports"], function (require, exports) {
-    "use strict";
-    var DashApp = (function () {
-        function DashApp() {
-        }
-        DashApp.prototype.configureRouter = function (config, router) {
-            config.title = 'Vendedores';
-            config.map([
-                { route: ['', '/'], moduleId: 'dash/no-selection', name: 'no-selection', title: 'Select', nav: false },
-                { route: '/:id', moduleId: 'dash/vendor-detail', name: 'vendor-detail', nav: false }
-            ]);
-            this.router = router;
-        };
-        return DashApp;
-    }());
-    exports.DashApp = DashApp;
-});
-
-define('dash/index',["require", "exports"], function (require, exports) {
-    "use strict";
-    function configure(config) {
-    }
-    exports.configure = configure;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('dash/messages',["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
-    "use strict";
-    var VendorUpdated = (function () {
-        function VendorUpdated(user) {
-            this.user = user;
-        }
-        return VendorUpdated;
-    }());
-    VendorUpdated = __decorate([
-        aurelia_framework_1.autoinject(),
-        __metadata("design:paramtypes", [Object])
-    ], VendorUpdated);
-    exports.VendorUpdated = VendorUpdated;
-    var VendorViewed = (function () {
-        function VendorViewed(user) {
-            this.user = user;
-        }
-        return VendorViewed;
-    }());
-    VendorViewed = __decorate([
-        aurelia_framework_1.autoinject(),
-        __metadata("design:paramtypes", [Object])
-    ], VendorViewed);
-    exports.VendorViewed = VendorViewed;
-});
-
-define('dash/no-selection',["require", "exports"], function (require, exports) {
-    "use strict";
-    var NoSelection = (function () {
-        function NoSelection() {
-        }
-        return NoSelection;
-    }());
-    exports.NoSelection = NoSelection;
-});
-
-define('dash/utility',["require", "exports"], function (require, exports) {
-    "use strict";
-    function areEqual(obj1, obj2) {
-        return Object.keys(obj1).every(function (key) { return obj2.hasOwnProperty(key) && (obj1[key] === obj2[key]); });
-    }
-    exports.areEqual = areEqual;
-    ;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('dash/vendor-detail',["require", "exports", "aurelia-framework", "aurelia-event-aggregator", "./messages", "./utility", "../web-api"], function (require, exports, aurelia_framework_1, aurelia_event_aggregator_1, messages_1, utility_1, web_api_1) {
-    "use strict";
-    var VendorDetail = (function () {
-        function VendorDetail(api, ea) {
-            this.api = api;
-            this.ea = ea;
-        }
-        VendorDetail.prototype.updateInfoMethod = function (vendorConstructor) {
-            var _this = this;
-            return function (vendor) {
-                _this.vendor = vendor;
-                _this.routeConfig.navModel.setTitle(vendor.name);
-                _this.originalVendor = JSON.parse(JSON.stringify(vendor));
-                _this.ea.publish(new vendorConstructor(vendor));
-            };
-        };
-        VendorDetail.prototype.activate = function (params, routeConfig) {
-            this.routeConfig = routeConfig;
-            return this.api.getContactDetails(params.id)
-                .then(this.updateInfoMethod(messages_1.VendorViewed));
-        };
-        Object.defineProperty(VendorDetail.prototype, "canSave", {
-            get: function () {
-                return this.vendor.name && this.vendor.cpf && !this.api.isRequesting;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        VendorDetail.prototype.save = function () {
-            this.api.saveContact(this.vendor)
-                .then(this.updateInfoMethod(messages_1.VendorUpdated));
-        };
-        VendorDetail.prototype.cancel = function () {
-        };
-        VendorDetail.prototype.canDeactivate = function () {
-            if (!utility_1.areEqual(this.originalVendor, this.vendor)) {
-                var result = confirm('You have unsaved changes. Are you sure you wish to leave?');
-                if (!result) {
-                    this.ea.publish(new messages_1.VendorViewed(this.vendor));
-                }
-                return result;
-            }
-            return true;
-        };
-        return VendorDetail;
-    }());
-    VendorDetail = __decorate([
-        aurelia_framework_1.autoinject(),
-        __metadata("design:paramtypes", [web_api_1.WebAPI, aurelia_event_aggregator_1.EventAggregator])
-    ], VendorDetail);
-    exports.VendorDetail = VendorDetail;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('dash/vendor-list',["require", "exports", "aurelia-framework", "../web-api", "aurelia-event-aggregator", "./messages"], function (require, exports, aurelia_framework_1, web_api_1, aurelia_event_aggregator_1, messages_1) {
-    "use strict";
-    var VendorList = (function () {
-        function VendorList(api, ea) {
-            var _this = this;
-            this.api = api;
-            this.ea = ea;
-            this.selectedId = null;
-            this.vendors = [];
-            ea.subscribe(messages_1.VendorViewed, function (msg) { return _this.select(msg.user); });
-            ea.subscribe(messages_1.VendorUpdated, function (msg) {
-                var id = msg.user.id;
-                var found = _this.vendors.find(function (x) { return x.id == id; });
-                Object.assign(found, msg.user);
-            });
-        }
-        VendorList.prototype.created = function () {
-            var _this = this;
-            this.api.getContactList().then(function (vendors) { return _this.vendors = vendors; });
-        };
-        VendorList.prototype.select = function (vendor) {
-            this.selectedId = vendor.id;
-            return true;
-        };
-        VendorList.prototype.mask = function (cpf) {
-            return cpf;
-        };
-        return VendorList;
-    }());
-    VendorList = __decorate([
-        aurelia_framework_1.autoinject(),
-        __metadata("design:paramtypes", [web_api_1.WebAPI, aurelia_event_aggregator_1.EventAggregator])
-    ], VendorList);
-    exports.VendorList = VendorList;
 });
 
 define('pages/home',["require", "exports"], function (require, exports) {
@@ -698,7 +394,7 @@ define('pages/login',["require", "exports", "aurelia-framework", "../api/index",
                         case 0: return [4 /*yield*/, this.auth.login(this.user)];
                         case 1:
                             _a.sent();
-                            this.router.navigateToRoute('dash');
+                            this.router.navigateToRoute('home');
                             return [2 /*return*/];
                     }
                 });
@@ -873,7 +569,7 @@ define('pages/register',["require", "exports", "aurelia-framework", "aurelia-rou
                             return [4 /*yield*/, this.auth.login(this.user)];
                         case 2:
                             _a.sent();
-                            this.router.navigateToRoute('dash');
+                            this.router.navigateToRoute('home');
                             return [2 /*return*/];
                     }
                 });
@@ -953,14 +649,9 @@ define('resources/value-converters/auth-filter',["require", "exports"], function
 
 define('text!app.html', ['module'], function(module) { module.exports = "<template id=\"app\">\n  <require from=\"./resources/elements/nav-bar.html\"></require>\n  <require from=\"bootstrap/css/bootstrap.css\"></require>\n  <require from=\"./app.css\"></require>\n  \n  <nav-bar router.bind=\"router\" auth.bind=\"auth\"></nav-bar>\n  \n  <loading-indicator loading.bind=\"router.isNavigating || api.isRequesting\"></loading-indicator>\n  \n  <section class=\"page-host\">\n    <router-view></router-view>\n  </section>\n</template>\n"; });
 define('text!app.css', ['module'], function(module) { module.exports = "body {\n  margin: 0; }\n\n.splash {\n  text-align: center;\n  margin: 10% 0 0 0;\n  box-sizing: border-box; }\n  .splash .message {\n    font-size: 72px;\n    line-height: 72px;\n    text-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;\n    text-transform: uppercase;\n    font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif; }\n  .splash .fa-spinner {\n    text-align: center;\n    display: inline-block;\n    font-size: 72px;\n    margin-top: 50px; }\n\n.page-host {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 50px;\n  bottom: 0;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@media print {\n  .page-host {\n    position: absolute;\n    left: 10px;\n    right: 0;\n    top: 50px;\n    bottom: 0;\n    overflow-y: inherit;\n    overflow-x: inherit; } }\n\nsection {\n  margin: 0 20px; }\n\n.navbar-nav li.loader {\n  margin: 12px 24px 0 6px; }\n\n.pictureDetail {\n  max-width: 425px; }\n\n/* animate page transitions */\nsection.au-enter-active {\n  -webkit-animation: fadeInRight 1s;\n  animation: fadeInRight 1s; }\n\ndiv.au-stagger {\n  /* 50ms will be applied between each successive enter operation */\n  -webkit-animation-delay: 50ms;\n  animation-delay: 50ms; }\n\n.card-container.au-enter {\n  opacity: 0 !important; }\n\n.card-container.au-enter-active {\n  -webkit-animation: fadeIn 2s;\n  animation: fadeIn 2s; }\n\n.card {\n  overflow: hidden;\n  position: relative;\n  border: 1px solid #CCC;\n  border-radius: 8px;\n  text-align: center;\n  padding: 0;\n  background-color: #337ab7;\n  color: #88acd9;\n  margin-bottom: 32px;\n  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }\n  .card .content {\n    margin-top: 10px; }\n  .card .content .name {\n    color: white;\n    text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);\n    font-size: 18px; }\n  .card .header-bg {\n    /* This stretches the canvas across the entire hero unit */\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 70px;\n    border-bottom: 1px #FFF solid;\n    border-radius: 6px 6px 0 0; }\n  .card .avatar {\n    position: relative;\n    margin-top: 15px;\n    z-index: 100; }\n  .card .avatar img {\n    width: 100px;\n    height: 100px;\n    -webkit-border-radius: 50%;\n    -moz-border-radius: 50%;\n    border-radius: 50%;\n    border: 2px #FFF solid; }\n\n/* animation definitions */\n@-webkit-keyframes fadeInRight {\n  0% {\n    opacity: 0;\n    -webkit-transform: translate3d(100%, 0, 0);\n    transform: translate3d(100%, 0, 0); }\n  100% {\n    opacity: 1;\n    -webkit-transform: none;\n    transform: none; } }\n\n@keyframes fadeInRight {\n  0% {\n    opacity: 0;\n    -webkit-transform: translate3d(100%, 0, 0);\n    -ms-transform: translate3d(100%, 0, 0);\n    transform: translate3d(100%, 0, 0); }\n  100% {\n    opacity: 1;\n    -webkit-transform: none;\n    -ms-transform: none;\n    transform: none; } }\n\n@-webkit-keyframes fadeIn {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n\n@keyframes fadeIn {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n"; });
-define('text!dash/dash-app.html', ['module'], function(module) { module.exports = "<template class=\"dash-app\">\n  <require from=\"./vendor-list\"></require>\n  <require from=\"./styles.css\"></require>\n\n  <div class=\"row\">\n    <vendor-list class=\"col-md-4\"></vendor-list>\n    <router-view class=\"col-md-8\"></router-view>\n  </div>\n</template>\n"; });
-define('text!dash/no-selection.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"no-selection text-center\">\n    <h2>Selecione um vendedor</h2>\n  </div>\n</template>\n"; });
-define('text!dash/styles.css', ['module'], function(module) { module.exports = "body {\n  padding-top: 70px; }\n\n.dash-app section {\n  margin: 0 20px; }\n\n.dash-app a:focus {\n  outline: none; }\n\n.dash-app .navbar-nav li.loader {\n  margin: 12px 24px 0 6px; }\n\n.dash-app .no-selection {\n  margin: 20px; }\n\n.dash-app .vendor-list {\n  overflow-y: auto;\n  border: 1px solid #ddd;\n  padding: 10px;\n  border-bottom: 1px solid #ddd;\n  background-color: #fff; }\n\n.dash-app .panel {\n  margin: 20px; }\n\n.dash-app .button-bar {\n  right: 0;\n  left: 0;\n  bottom: 0;\n  border-top: 1px solid #ddd;\n  background: white; }\n  .dash-app .button-bar > button {\n    float: right;\n    margin: 20px; }\n\n.dash-app li.list-group-item {\n  list-style: none; }\n  .dash-app li.list-group-item > a {\n    text-decoration: none; }\n  .dash-app li.list-group-item.active > a {\n    color: white; }\n"; });
-define('text!resources/elements/sing.css', ['module'], function(module) { module.exports = ".form-signin {\n  max-width: 330px;\n  padding: 15px;\n  margin: 0 auto; }\n  .form-signin .form-signin-heading, .form-signin .checkbox {\n    margin-bottom: 10px; }\n  .form-signin .checkbox {\n    font-weight: normal; }\n  .form-signin .form-control {\n    position: relative;\n    height: auto;\n    box-sizing: border-box;\n    padding: 10px;\n    font-size: 16px; }\n  .form-signin .form-control:focus {\n    z-index: 2; }\n  .form-signin input[type=\"email\"] {\n    margin-bottom: -1px;\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n  .form-signin input[type=\"password\"] {\n    margin-bottom: 10px;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0; }\n"; });
-define('text!dash/vendor-detail.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"panel panel-primary\">\n    <div class=\"panel-heading\">\n      <h3 class=\"panel-title\">Profile</h3>\n    </div>\n\n    <div class=\"panel-body\">\n      <form role=\"form\" class=\"form-horizontal\">\n        <div class=\"form-group\">\n          <label class=\"col-sm-2 control-label\">Nome</label>\n          <div class=\"col-sm-10\">\n            <input type=\"text\" placeholder=\"first name\" class=\"form-control\" value.bind=\"contact.name\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label class=\"col-sm-2 control-label\">CPF</label>\n          <div class=\"col-sm-10\">\n            <input type=\"text\" placeholder=\"000.000.000-00\" class=\"form-control\" value.bind=\"contact.cpf\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label class=\"col-sm-2 control-label\">Email</label>\n          <div class=\"col-sm-10\">\n            <input type=\"text\" placeholder=\"email\" class=\"form-control\" value.bind=\"contact.email\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label class=\"col-sm-2 control-label\">Telefone</label>\n          <div class=\"col-sm-10\">\n            <input type=\"text\" placeholder=\"phone number\" class=\"form-control\" value.bind=\"contact.phoneNumber\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label class=\"col-sm-2 control-label\">Senha</label>\n          <div class=\"col-sm-10\">\n            <button class=\"btn btn-info\">Mudar Senha</button>\n          </div>\n        </div>\n      </form>\n    </div>\n  </div>\n\n  <div class=\"button-bar\">\n    <button class=\"btn btn-success\" click.delegate=\"save()\" disabled.bind=\"!canSave\">Savar</button>\n    <a class=\"btn btn-close\" route-href=\"route: no-selection;\">Cancelar</a>\n  </div>\n</template>\n"; });
-define('text!dash/vendor-list.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"vendor-list\">\n    <ul class=\"list-group\">\n      <li repeat.for=\"vendor of vendors\" class=\"list-group-item ${vendor.id === selectedId ? 'active' : ''}\">\n        <a route-href=\"route: vendor-detail; params.bind: {id:vendor.id}\" click.delegate=\"select(vendor)\">\n          <h4 class=\"list-group-item-heading\">${vendor.name} ${mask(vendor.cpf)}</h4>\n          <p class=\"list-group-item-text\">${vendor.email}</p>\n        </a>\n      </li>\n    </ul>\n  </div>\n</template>\n"; });
 define('text!pages/home.html', ['module'], function(module) { module.exports = "<template>\n\n  <div class=\"jumbotron\">\n    <h2 class=\"text-center\">${heading}</h2>\n    <p class=\"text-center\">\n      <a click.trigger=\"sigin()\" class=\"btn btn-primary\" if.bind=\"!token\">Login</a>\n      <a click.trigger=\"signout()\" class=\"btn btn-warning\" if.bind=\"token\">Logout</a>\n    </p>\n  </div>\n\n   <div class=\"container\">\n    <div class=\"col-md-4\" repeat.for=\"post of [1, 2, 3, 4]\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <img src=\"https://cdn.auth0.com/blog/aurelia-logo.png\" class=\"img-responsive\" alt=\"\" />\n        </div>\n        <div class=\"panel-footer\"><strong>Aurelia </strong> Framework</div>\n      </div>\n    </div>\n  </div>\n\n</template>\n    "; });
 define('text!pages/login.html', ['module'], function(module) { module.exports = "<template>\n\n  <div class=\"container\">\n    <form class=\"form-signin\" submit.delegate=\"singin()\">\n      <h2 class=\"form-signin-heading\">Entrar</h2>\n\n      <label for=\"inputEmail\" class=\"sr-only\">Email </label>\n      <input id=\"inputEmail\" type=\"email\" class=\"form-control\" placeholder=\"seu@email.com\" \n        required=\"\" autofocus=\"\" value.bind=\"user.email\">\n\n      <label for=\"inputPassword\" class=\"sr-only\">Senha</label>\n      <input id=\"inputPassword\" type=\"password\" class=\"form-control\" placeholder=\"Senha\" \n        required=\"\" value.bind=\"user.password\">\n\n      <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\"\n        > Sign in\n      </button>\n    </form>\n\n  </div>\n\n</template>\n"; });
+define('text!resources/elements/sing.css', ['module'], function(module) { module.exports = ".form-signin {\n  max-width: 330px;\n  padding: 15px;\n  margin: 0 auto; }\n  .form-signin .form-signin-heading, .form-signin .checkbox {\n    margin-bottom: 10px; }\n  .form-signin .checkbox {\n    font-weight: normal; }\n  .form-signin .form-control {\n    position: relative;\n    height: auto;\n    box-sizing: border-box;\n    padding: 10px;\n    font-size: 16px; }\n  .form-signin .form-control:focus {\n    z-index: 2; }\n  .form-signin input[type=\"email\"] {\n    margin-bottom: -1px;\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n  .form-signin input[type=\"password\"] {\n    margin-bottom: 10px;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0; }\n"; });
 define('text!pages/not-found.html', ['module'], function(module) { module.exports = "<template>\n  <h2>Pagina não encontrada</h2>\n</template>\n  "; });
 define('text!pages/profile.html', ['module'], function(module) { module.exports = "<template>\n    <h2>${title}</h2>\n  </template>\n    "; });
 define('text!pages/register.html', ['module'], function(module) { module.exports = "<template>\n  \n  <div class=\"container\">\n    <form class=\"form-signin\" submit.delegate=\"singup()\">\n      <h2 class=\"form-signin-heading\">Cadastro</h2>\n\n      <label for=\"inputEmail\" class=\"sr-only\">Email </label>\n      <input id=\"inputEmail\" type=\"email\" class=\"form-control\" placeholder=\"seu@email.com\" \n        required=\"\" autofocus=\"\" value.bind=\"user.email\">\n\n      <label for=\"inputPassword\" class=\"sr-only\">Senha</label>\n      <input id=\"inputPassword\" type=\"password\" class=\"form-control\" placeholder=\"Senha\" \n        required=\"\" value.bind=\"user.password\">\n      \n      <div class=\"checkbox\">\n        <label>\n          <input type=\"checkbox\" value=\"remember-me\" required> \n          Aceito os <a href=\"\">termos</a> de adesão. \n        </label>\n      </div>\n      <button class=\"btn btn-lg btn-primary btn-block\" \n        type=\"submit\"> Registrar\n      </button>\n    </form>\n  </div>\n\n</template>\n"; });

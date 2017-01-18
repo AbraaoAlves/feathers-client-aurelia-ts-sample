@@ -4,5 +4,5 @@ export default {
   moduleId: 'pages/profile',
   nav: true,
   title: 'Profile',
-  auth: false
+  auth: true
 };

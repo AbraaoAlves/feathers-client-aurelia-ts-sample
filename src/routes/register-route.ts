@@ -4,5 +4,5 @@ export default {
   moduleId: 'pages/register',
   nav: true,
   title: 'Register',
-  auth: false
+  auth: true
 };

@@ -1711,7 +1711,7 @@ feathers-hooks-common@^2.0.3:
 
 "feathers-hooks@https://git@github.com/AbraaoAlves/feathers-hooks.git#definition":
   version "1.7.1"
-  resolved "https://git@github.com/AbraaoAlves/feathers-hooks.git#a9c5c1d7eb807de6eeb04960068680ba30a68d81"
+  resolved "https://git@github.com/AbraaoAlves/feathers-hooks.git#2376bdb4b8a822ed45a811348314b3d7e8891f8e"
   dependencies:
     feathers-commons "^0.8.6"
     feathers-hooks-common "^2.0.3"
@@ -1719,7 +1719,7 @@ feathers-hooks-common@^2.0.3:
 
 "feathers-primus@https://git@github.com/AbraaoAlves/feathers-primus.git#definition":
   version "2.0.0"
-  resolved "https://git@github.com/AbraaoAlves/feathers-primus.git#511b401e41e518ad25db79f83d3b208338fca3db"
+  resolved "https://git@github.com/AbraaoAlves/feathers-primus.git#8d01f3ece37b2818b8477c4b920228bd978620f4"
   dependencies:
     debug "^2.2.0"
     feathers-socket-commons "^2.0.0"
@@ -1729,7 +1729,7 @@ feathers-hooks-common@^2.0.3:
 
 "feathers-rest@https://git@github.com/AbraaoAlves/feathers-rest.git#definition":
   version "1.5.3"
-  resolved "https://git@github.com/AbraaoAlves/feathers-rest.git#af48dfb6e86b6750d0634e97f30ae31ad40d2970"
+  resolved "https://git@github.com/AbraaoAlves/feathers-rest.git#fcf6b9e905eb1a4de7c23d02a40215ef9bd49bd9"
   dependencies:
     debug "^2.2.0"
     feathers-commons "^0.8.0"
@@ -1746,7 +1746,7 @@ feathers-socket-commons@^2.0.0:
 
 "feathers-socketio@https://git@github.com/AbraaoAlves/feathers-socketio.git#definition":
   version "1.4.2"
-  resolved "https://git@github.com/AbraaoAlves/feathers-socketio.git#793d376b28c63cd66b37d3c52a279ee05a21307c"
+  resolved "https://git@github.com/AbraaoAlves/feathers-socketio.git#12de403d0775f8c26889e85a9525a8b349cdc6b5"
   dependencies:
     debug "^2.2.0"
     feathers-socket-commons "^2.0.0"
@@ -1908,7 +1908,7 @@ fs-access@^1.0.0:
 
 fs-exists-sync@^0.1.0:
   version "0.1.0"
-  resolved "https://registry.yarnpkg.com/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz#982d6893af918e72d08dec9e8673ff2b5a8d6add"
+  resolved "http://registry.npmjs.org/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz#982d6893af918e72d08dec9e8673ff2b5a8d6add"
 
 fs-extra@1.0.0:
   version "1.0.0"
@@ -3495,7 +3495,25 @@ node-emoji@^1.4.1:
   dependencies:
     string.prototype.codepointat "^0.2.0"
 
-node-gyp@^3.3.1, node-gyp@~3.4.0:
+node-gyp@^3.3.1:
+  version "3.5.0"
+  resolved node-gyp-3.5.0.tgz#a8fe5e611d079ec16348a3eb960e78e11c85274a
+  dependencies:
+    fstream "^1.0.0"
+    glob "^7.0.3"
+    graceful-fs "^4.1.2"
+    minimatch "^3.0.2"
+    mkdirp "^0.5.0"
+    nopt "2 || 3"
+    npmlog "0 || 1 || 2 || 3 || 4"
+    osenv "0"
+    request "2"
+    rimraf "2"
+    semver "2.x || 3.x || 4 || 5"
+    tar "^2.0.0"
+    which "1"
+
+node-gyp@~3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-3.4.0.tgz#dda558393b3ecbbe24c9e6b8703c71194c63fa36"
   dependencies:
@@ -3732,7 +3750,7 @@ npm@^3.10.8:
     gauge "~2.6.0"
     set-blocking "~2.0.0"
 
-npmlog@^4.0.0, npmlog@^4.0.1, npmlog@~4.0.0:
+"npmlog@0 || 1 || 2 || 3 || 4", npmlog@^4.0.0, npmlog@^4.0.1, npmlog@~4.0.0:
   version "4.0.2"
   resolved npmlog-4.0.2.tgz#d03950e0e78ce1527ba26d2a7592e9348ac3e75f
   dependencies:
@@ -4374,32 +4392,7 @@ replace-ext@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-0.0.1.tgz#29bbd92078a739f0bcce2b4ee41e837953522924"
 
-request@2, request@2.78.0, request@^2.61.0, request@^2.74.0:
-  version "2.78.0"
-  resolved "https://registry.yarnpkg.com/request/-/request-2.78.0.tgz#e1c8dec346e1c81923b24acdb337f11decabe9cc"
-  dependencies:
-    aws-sign2 "~0.6.0"
-    aws4 "^1.2.1"
-    caseless "~0.11.0"
-    combined-stream "~1.0.5"
-    extend "~3.0.0"
-    forever-agent "~0.6.1"
-    form-data "~2.1.1"
-    har-validator "~2.0.6"
-    hawk "~3.1.3"
-    http-signature "~1.1.0"
-    is-typedarray "~1.0.0"
-    isstream "~0.1.2"
-    json-stringify-safe "~5.0.1"
-    mime-types "~2.1.7"
-    node-uuid "~1.4.7"
-    oauth-sign "~0.8.1"
-    qs "~6.3.0"
-    stringstream "~0.0.4"
-    tough-cookie "~2.3.0"
-    tunnel-agent "~0.4.1"
-
-request@^2.79.0:
+request@2, request@^2.61.0, request@^2.74.0, request@^2.79.0:
   version "2.79.0"
   resolved request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de
   dependencies:
@@ -4423,6 +4416,31 @@ request@^2.79.0:
     tough-cookie "~2.3.0"
     tunnel-agent "~0.4.1"
     uuid "^3.0.0"
+
+request@2.78.0:
+  version "2.78.0"
+  resolved "https://registry.yarnpkg.com/request/-/request-2.78.0.tgz#e1c8dec346e1c81923b24acdb337f11decabe9cc"
+  dependencies:
+    aws-sign2 "~0.6.0"
+    aws4 "^1.2.1"
+    caseless "~0.11.0"
+    combined-stream "~1.0.5"
+    extend "~3.0.0"
+    forever-agent "~0.6.1"
+    form-data "~2.1.1"
+    har-validator "~2.0.6"
+    hawk "~3.1.3"
+    http-signature "~1.1.0"
+    is-typedarray "~1.0.0"
+    isstream "~0.1.2"
+    json-stringify-safe "~5.0.1"
+    mime-types "~2.1.7"
+    node-uuid "~1.4.7"
+    oauth-sign "~0.8.1"
+    qs "~6.3.0"
+    stringstream "~0.0.4"
+    tough-cookie "~2.3.0"
+    tunnel-agent "~0.4.1"
 
 request@~2.75.0:
   version "2.75.0"
