@@ -7,16 +7,6 @@
     "url": "???"
   },
   "scripts": {
-    "postinstall": "npm run pack:feathers:all",
-    "pack:feathers:all":"npm run pack:feathers && npm run pack:feathers-rest && npm run pack:feathers-socketio && npm run pack:feathers-socketio && npm run pack:feathers-primus && npm run pack:feathers-hooks && npm run pack:feathers-auth && npm run pack:feathers-client",
-    "pack:feathers": "cd node_modules/feathers && npm i && npm run compile && rmdir node_modules /s /q && cd ../..",
-    "pack:feathers-rest": "cd node_modules/feathers-rest && npm i && npm run compile&& rmdir node_modules /s /q && cd ../..",
-    "pack:feathers-socketio": "cd node_modules/feathers-socketio && npm i && npm run compile&& rmdir node_modules /s /q && cd ../..",
-    "pack:feathers-primus": "cd node_modules/feathers-primus && npm i && npm run compile&& rmdir node_modules /s /q && cd ../..",
-    "pack:feathers-hooks": "cd node_modules/feathers-hooks && npm i && npm run compile&& rmdir node_modules /s /q && cd ../..",
-    "pack:feathers-auth": "cd node_modules/feathers-authentication-client && npm i && npm run compile&& rmdir node_modules /s /q && cd ../..",
-    "pack:feathers-client": "cd node_modules/feathers-client && npm i && npm run compile && rmdir node_modules /s /q && cd ../..",
-
     "start": "au run",
     "test": "au test"
   },
@@ -27,7 +17,7 @@
     "aurelia-fetch-client": "^1.1.0",
     "bluebird": "^3.4.1",
     "bootstrap": "^3.3.7",
-    "feathers-client": "https://git@github.com/AbraaoAlves/feathers-client.git#definition",
+    "feathers-client": "https://github.com/AbraaoAlves/feathers-client/releases/download/definition/feathers-client-1.9.0.tgz",
     "firebase": "^3.6.4",
     "jquery": "^3.1.1",
     "localforage": "https://git@github.com/localForage/localForage.git",
